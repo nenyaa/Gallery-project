@@ -1,0 +1,24 @@
+
+{% load custom_tags %}
+{% load custom_filters %}
+{% load thumbnail %}
+
+{% block content %}
+    <h1>{{ object.title|scream }}</h1>
+    
+    {% for image in object.picture_set.all %}
+    
+    <p>
+        {% thumbnail image.img "250" as im %}
+            <img src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}">
+        {% endthumbnail %}
+
+    </p>    
+    {% endfor %}
+
+{% endblock %}
+
+
+def get_queryset(self):
+model = self.kwargs['category']
+return getattr(models, model).objects.all()
